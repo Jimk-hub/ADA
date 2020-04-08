@@ -12,15 +12,15 @@ public class Log {
 	
 	public Log(String file_name) throws SecurityException, IOException {
 		
-		File f =new File(file_name);
-		if(!f.exists()) {
+		File f =new File(file_name); //creates file for log
+		if(!f.exists()) { //checks if the log exist, if it doesnt it will create file
 			f.createNewFile();
 		}
 		
 		fh = new FileHandler(file_name, true);
 		logger = Logger.getLogger("test");
 		logger.addHandler(fh);
-		SimpleFormatter formatter = new SimpleFormatter();
+		SimpleFormatter formatter = new SimpleFormatter(); //creates the format for the log identifying it by sensitivity 
 		fh.setFormatter(formatter);
 	}
 }
