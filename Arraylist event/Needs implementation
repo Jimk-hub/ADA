@@ -1,0 +1,103 @@
+Main:
+
+import java.util.Scanner;
+import java.util.ArrayList;
+public class ExceptionDriver
+{
+    public static void main (String[] args)
+    {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<AlarmEvent> Info = new ArrayList<AlarmEvent>();		//create new alarm object
+        char quit = 'Y';
+        String Event, EventDetails;			//storing event name and event details
+        int Alarmhr;
+        int Alarmmin;    					//storing alarm hr (add alarm minutes)
+            while (quit == 'Y')
+            {
+                System.out.print("\n Event: ");
+                Event = scan.next();
+                System.out.print(" Event Details: ");
+                EventDetails = scan.next();
+                System.out.print(" AlarmEvent Alarmhr: ");					//scanner for entrys
+                Alarmhr = scan.nextInt();
+                System.out.print(" AlarmEvent Alarmmin: ");					//scanner for entrys
+                Alarmmin = scan.nextInt();
+                Info.add (new AlarmEvent(EventDetails, Event, Alarmhr, Alarmmin));
+                System.out.print(" Enter Another Record? (Y/N)");
+                String word = scan.next();
+                word = word.toUpperCase();
+                quit= word.charAt(0);
+            }
+            for(AlarmEvent stuff : Info)            //right now this should just print out list entrys
+            System.out.println(stuff);
+    }
+}
+
+
+
+Constructor:
+
+public class AlarmEvent
+{
+    public String Event, EventDetails;
+    private int Alarmhr;
+    public AlarmEvent (String EventDetails, String EventName, int Alarmhr, int Alarmmin) //(object values)
+    {
+        Event = EventName;
+        EventDetails = EventDetails;
+        Alarmhr = Alarmhr;
+    } 
+    public String toString ()			// changes default toString message to be readable
+    {
+        return "\n\n Event: " + EventName + ", " + EventDetails + "\n Alarmhr: " + Alarmhr + ":" + Alarmmin + "\n";
+    }		
+    public boolean equals (Object other)		// will use this to stop alarm overlap
+    {
+        return (Alarmhr.equals(((AlarmEvent)other).getAlarmhr())&&
+        Alarmmin.equals(((AlarmEvent)other).getAlarmmin()));
+    }
+    public int compareTo (Object other)		//will use this to make sure no duplicate events
+    {
+        int result;
+        String otherAlarmhr = ((AlarmEvent)other).getAlarmhr();
+        String otherAlarmmin = ((AlarmEvent)other).getAlarmmin();
+        if (EventDetails.equals(otherEventDetails))
+            result = Event.compareTo(otherAlarmhr);
+        else
+            result = EventDetails.compareTo(otherAlarmmin);
+        return result;
+    }
+    public String getEventName ()				
+    {
+        return Event;
+    }
+    public String getEventDetails ()
+    {
+        return EventDetails;
+    }
+    public String getAlarmhr ()
+    {
+    	return Alarmhr;
+    }
+    public String getAlarmmin ()
+    {
+    	return Alarmmin;
+    }
+}
+
+
+
+
+
+use compare to check that event details are not exactly alike
+
+use equals to stop overlap from alarms
+
+create code to pull from list for thread (hr and min)
+
+Response to alarm should include event and eventdetails
+
+
+Timeout for no alarm response
+
+
