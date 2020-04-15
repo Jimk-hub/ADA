@@ -2,6 +2,8 @@ package tree;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -19,8 +21,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -66,6 +70,16 @@ class AlarmThread1 implements Runnable //comments added
 	        		if (here.getMinute() == Balt.amin1 && here.getHour() == Balt.ahr1)  //0-23 hours
 	        		{
 	        			JFrame f=new JFrame("Reminder Alarm");  
+	        			JPanel panel = new JPanel(new GridBagLayout());
+	        		    f.getContentPane().add(panel,BorderLayout.NORTH);
+	        		    
+	        		    GridBagConstraints c = new GridBagConstraints();
+	        		    
+	        		    c.ipadx = 200;
+	        		    c.ipady = 300;
+	        		    c.gridx = 0;
+	        		    c.gridy = 0;
+	        		    
 	        			JTextArea tf =new JTextArea(10,20);  
 	        		    tf.setPreferredSize(new Dimension(450,150));
 	        			tf.setText("Take Ventolin Enhaler"
@@ -73,6 +87,11 @@ class AlarmThread1 implements Runnable //comments added
 	                    tf.setBounds(50,50, 150,20);  
 	                    JButton b=new JButton("DONE!");  
 	                    b.setBounds(50,100,95,30); 
+	                    
+	                    panel.add(tf,c);
+	                    c.gridy = 1;
+	                    panel.add(b,c);
+	                    
 	                    BufferedImage img = null;
 	                    String filepath = "src\\tree\\ventolin.jpg";
 	            		play();
@@ -87,12 +106,34 @@ class AlarmThread1 implements Runnable //comments added
 	            		
 	            		JLabel lbl = new JLabel();
 	            		lbl.setIcon(new ImageIcon(img));
-	            		f.getContentPane().add(lbl,BorderLayout.SOUTH);
+	            		c.gridx = 1;
+	            		panel.add(lbl,c);
+	            		//f.getContentPane().add(lbl,BorderLayout.SOUTH);
+	            		
+					    Timer timer = new Timer(10000, new ActionListener() {
+					        @Override
+					        public void actionPerformed(ActionEvent e) {
+					          f.dispose();
+					          try {
+									FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"),true);
+									fw.write("Event 1 NOT ATTEMPTED: \n"+LocalTime.now()); 
+									  
+							        System.out.println("Writing successful"); 
+							        //close the file  
+							        fw.close(); 
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+					        }
+					      });
+					      timer.start();
+	            		
 	                    b.addActionListener(new ActionListener(){  
 	                public void actionPerformed(ActionEvent e){  
 	                	try {
-							FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"));
-							fw.write("Write Time"); 
+							FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"),true);
+							fw.write("Event 1 Completed at:"+LocalTime.now()+"\n"); 
 							  
 					        System.out.println("Writing successful"); 
 					        //close the file  
@@ -104,9 +145,9 @@ class AlarmThread1 implements Runnable //comments added
 	                            tf.setText("Your Response Has been Received!");  
 	                        }  
 	                    });  
-	                    f.add(b);f.add(tf); 
+	                    //f.add(b);f.add(tf); 
 	                    
-	                    f.setSize(400,400);  
+	                    f.setSize(900,900);  
 	                    //f.setLayout(null);  
 	                    f.setVisible(true); 
 	                    

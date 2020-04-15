@@ -1,4 +1,5 @@
 package tree;
+
 import java.awt.*;
 //import java.awt.GridBagConstraints;
 //import java.awt.GridBagLayout;
@@ -59,7 +60,7 @@ public class Balt {
     f.getContentPane().add(panel,BorderLayout.NORTH);
     
     GridBagConstraints c = new GridBagConstraints();
-    String filepath = "src\\tree\\red.jpg";
+    String filepath = "C:\\Users\\USER\\Desktop\\red.jpg";
 	BufferedImage img = null;
 	try
 	{
@@ -107,12 +108,17 @@ public class Balt {
     tf.setPreferredSize(new Dimension(450,150));
     //tf.setBounds(50,100,95,30);  
     panel.add(tf,c);
+    c.gridy = 2;
+    c.ipady = 5;
+    c.ipadx = 20;
+    
+    panel.add(new VisualClock(),c);
     
     JButton ab1 = new JButton("Alarm 1");
     JButton ab2 = new JButton("Alarm 2");
     JButton ab3 = new JButton("Alarm 3");
     
-    JButton b1 = new JButton("To Do Lists");  
+    JButton b1 = new JButton("Nearby Pharmacies");  
     JButton b2 = new JButton("Set New Alarm");
     //JButton b3 = new JButton("Add Contacts");
     JButton b4 = new JButton("View Contacts");
@@ -145,8 +151,10 @@ public class Balt {
 
         public void actionPerformed(ActionEvent e)
         {  
-            //ShowImage("C:\\Users\\USER\\Desktop\\red.jpg");
-        	tf.setText("Create the list to add all the Alarms");  
+            LocatePharmacies John = new LocatePharmacies();
+            John.locate();
+        	//ShowImage("C:\\Users\\USER\\Desktop\\red.jpg");
+        	//tf.setText("Create the list to add all the Alarms");  
         }  
     });  
     
@@ -192,6 +200,7 @@ public class Balt {
 				    f1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
 					object1.start();
+					
 					
 				}
             	

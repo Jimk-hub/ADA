@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -88,11 +89,31 @@ class AlarmThread2 implements Runnable //comments added
 	            		JLabel lbl = new JLabel();
 	            		lbl.setIcon(new ImageIcon(img));
 	            		f.getContentPane().add(lbl,BorderLayout.SOUTH);
+	            		
+	            		Timer timer = new Timer(10000, new ActionListener() {
+					        @Override
+					        public void actionPerformed(ActionEvent e) {
+					          f.dispose();
+					          try {
+									FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"),true);
+									fw.write("Event 2 NOT ATTEMPTED: \n"+LocalTime.now()); 
+									  
+							        System.out.println("Writing successful"); 
+							        //close the file  
+							        fw.close(); 
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+					        }
+					      });
+					      timer.start();
+	            		
 	                    b.addActionListener(new ActionListener(){  
 	                public void actionPerformed(ActionEvent e){  
 	                	try {
-							FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"));
-							fw.write("Write Time"); 
+							FileWriter fw=new FileWriter(new File("C:\\Users\\USER\\Desktop\\A6", "log.txt"),true);
+							fw.write("Event 2 Completed at:"+LocalTime.now()+"\n"); 
 							  
 					        System.out.println("Writing successful"); 
 					        //close the file  
