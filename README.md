@@ -1,5 +1,4 @@
-# ADA
-Assisted Living Tool
+# Assisted Living Tool
 
 Introduction
 A simple event-driven application to assist demented and care-seeking individuals with detailed pictured-alarms.
